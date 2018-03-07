@@ -51,4 +51,16 @@ ON s.region_id = r.id
 GROUP BY r.name
 HAVING SUM(o.total_amt_usd)  = (SELECT * FROM max_total)
 
-	
+4.
+WITH top_ten AS
+	(
+	SELECT  a.id, a.name as acc_name, SUM(o.total_amt_usd) AS sum_amt
+	FROM orders o
+	JOIN accounts a 
+	ON o.account_id = a.id
+	GROUP BY 1, 2
+    ORDER BY 3 DESC
+	LIMIT 10
+    )
+SELECT AVG(sum_amt)
+FROM top_ten 
