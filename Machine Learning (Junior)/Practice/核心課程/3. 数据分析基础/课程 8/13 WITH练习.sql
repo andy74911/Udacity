@@ -51,7 +51,8 @@ ON s.region_id = r.id
 GROUP BY r.name
 HAVING SUM(o.total_amt_usd)  = (SELECT * FROM max_total)
 
-4.
+5.对于总消费前十名的客户，他们的平均终身消费 (total_amt_usd) 是多少?
+304846.969000000000
 WITH top_ten AS
 	(
 	SELECT  a.id, a.name as acc_name, SUM(o.total_amt_usd) AS sum_amt
@@ -63,4 +64,15 @@ WITH top_ten AS
 	LIMIT 10
     )
 SELECT AVG(sum_amt)
+
+6.比所有客户的平均消费高的企业平均终身消费 (total_amt_usd) 是多少？4721.1397439971747168
+WITH account_avg AS(
+SELECT a.id AS acc_id, a.name AS acc_name, AVG(total_amt_usd) AS avg_amt
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY 1, 2)
+
+
+
 FROM top_ten 
