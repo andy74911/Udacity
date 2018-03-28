@@ -258,6 +258,8 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_swapRows')
 # TODO r1 <--- r1 * scale
 # scale为0是非法输入，要求 raise ValueError
 # 直接修改参数矩阵，无返回值
+def is_zero(num, epsilon = 1.0e-16):    
+    return (abs(num) < epsilon)
 def scaleRow(M, r, scale):
     if scale is 0:
         raise ValueError('scale can not be zero')
@@ -281,6 +283,7 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_scaleRow')
 
 
 # In[18]:
+
 
 
 # TODO r1 <--- r1 + r2*scale
@@ -442,11 +445,10 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 
 # ### 2.3.3 实现 Gaussian Jordan 消元法
 
-# In[77]:
+# In[22]:
 
 
-def is_zero(num, epsilon = 1.0e-16):    
-    return (abs(num) < epsilon)
+
 def first_not_zero_index(row, epsilon = 1.0e-16):
     i = 0
     for item in row:
@@ -474,14 +476,14 @@ def order_row_on_diagonal_not_zero(M):
             swapRows(M, r, r_swap)  
             printMatrix(M)
         r += 1
-def is_singualar(M, epsilon = 1.0e-16):
+def is_singualar(M, r = 0, epsilon = 1.0e-10):
     row, col = shape(M)
-    r = 0 
+    #print('is_singualar fun')
     #printMatrix(M)
     while r < min(row, col):
         c , all_ele_zero = 0, True
-        sub_c, 
         while c < col - 1:                 
+            #print('M[r][c] = {}'.format(M[r][c]))
             if is_zero(M[r][c], epsilon) is False:
                 all_ele_zero = False
                 break
@@ -515,7 +517,7 @@ def matrix_AB_to_A_B(M):
     return (A, B)
 
 
-# In[76]:
+# In[23]:
 
 
 # TODO 实现 Gaussain Jordan 方法求解 Ax = b
@@ -534,14 +536,12 @@ def matrix_AB_to_A_B(M):
 def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
     a_row, a_col = shape(A)
     b_row, b_col = shape(b)
-    print('A = {},b ={}'.format(shape(A), shape(b)))
     if a_row != b_row and a_col != b_row:
         raise ValueError('Row number of A and B are not euqal')
         return None
     M = augmentMatrix(A,b) 
-    #printMatrix(M)
     c = 0
-    while c < min(a_col, a_row):         
+    while c < min(a_col, a_row):  
         #row operation 1    
         r =  c 
         max_row, max_value = -1 , 0
@@ -552,41 +552,30 @@ def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
                 max_row = r
             r += 1
         if max_row != c and max_row!= -1:
-            swapRows(M, c, max_row)
-            #print('Row Op1: c :{}, max_row:{}, max_value:{}'.format(c, max_row, max_value))
-            #printMatrix(M)
-        
+            swapRows(M, c, max_row) 
+            
         #row operation 2
         r = 0
         while r < a_row:
             if not is_zero(M[r][r]):
-                #print('Row Op2: r:{}, M[r][r] ={}'.format(r,M[r][r]))
-                scaleRow(M, r, 1/M[r][r])                
-                #printMatrix(M)
-            #else:
-            #    return None
+                scaleRow(M, r, 1/M[r][r]) 
+                if is_singualar(M, r = r):
+                    return None
             r += 1
         
         #row operation 3    
         r = c
         while r < a_row - 1:
             if not is_zero(M[c][c]):
-                if not is_zero( M[r+1][c]):
-                    s = -1 * M[r+1][c]/M[c][c]
-                    addScaledRow(M, r + 1, c , s)
-                    #print('Row Op3 {}:')
-                    #print('r + 1 = {}, c ={}, s ={}'.format(r + 1, c , s))
-                    #printMatrix(M)
-            else:
-                return None
+                #if not is_zero( M[r+1][c]):
+                s = -1 * M[r+1][c]/M[c][c]
+                addScaledRow(M, r + 1, c , s)
             r += 1
         c += 1
-    
+   
     if not is_zero( M[a_row - 1][a_col-1]) :
         scaleRow(M, a_row -1, 1/ M[a_row - 1][a_col-1]) 
-    else:
-        return None
-    #print('Start \n {}'.format(M))
+    
     r = a_row - 1
     while r > 0:
         r_cnt = r
@@ -594,56 +583,28 @@ def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
             s = - M[r_cnt -1][r]
             if not is_zero(s):
                 addScaledRow(M, r_cnt -1, r, s)
-                #print('\nr_cnt ={}, r = {},s ={}'.format(r_cnt, r, s))
-                #printMatrix(M)
-            #els#e:
-            #    return None
+                if is_singualar(M, r = r):
+                    return None
             r_cnt -= 1        
         r -= 1
-    #print('Final M:{}\n'.format(M))
+        
+    if is_singualar(M):
+        return None
     ans = [None] * b_row
     i = 0
     while i < b_row:
         ans[i] = [M[i][a_col]]
         i += 1
     return ans
-Arr = [ [0.00, -4.00,  2.00,  0.00],
-  [5.00, -5.00,  5.00,  1.00],
-  [0.00,-10.00,  5.00,  2.00]]
-A, b = matrix_AB_to_A_B(Arr)
-A = [
- [ -7 ,  0 ,  1 , -2 , -6 ,  1],
- [  2 ,  0 , -8 ,  5 ,  5 ,  3],
- [  0 , -4 ,  9 ,  9 ,  8 ,  9],
- [  8 ,  6 , -8 ,-10 ,  0 , -3],
- [ -8 , -5 , -1 , -8 , -6 , -6],
- [ -5 ,  5 , -9 , -2 ,  4 ,  4]]
-b = [
- [0],
- [1],
- [2],
- [3],
- [4],
- [5]]
-'''printMatrix(A)
-printMatrix(B)'''
-print(gj_Solve(A,b))
+
 #is_singualar(D)
 
 
-# In[78]:
+# In[24]:
 
 
 # 运行以下代码测试你的 gj_Solve 函数
 get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_gj_Solve')
-
-
-# In[74]:
-
-
-import numpy as np
-from scipy.linalg import solve
-print(solve(A,b))
 
 
 # ## (选做) 2.4 算法正确判断了奇异矩阵：
@@ -674,7 +635,7 @@ print(solve(A,b))
 
 # ## 3.1 随机生成样本点
 
-# In[26]:
+# In[25]:
 
 
 # 不要修改这里！
@@ -689,12 +650,12 @@ vs_scatter_2d(X, Y)
 # 
 # ### 3.2.1 猜测一条直线
 
-# In[27]:
+# In[26]:
 
 
 #TODO 请选择最适合的直线 y = mx + b
-m1 = 0.
-b1 = 0.
+m1 = -2.0
+b1 = 10.0
 
 # 不要修改这里！
 vs_scatter_2d(X, Y, m1, b1)
@@ -707,12 +668,17 @@ vs_scatter_2d(X, Y, m1, b1)
 # MSE = \frac{1}{n}\sum_{i=1}^{n}{(y_i - mx_i - b)^2}
 # $$
 
-# In[28]:
+# In[27]:
 
 
 # TODO 实现以下函数并输出所选直线的MSE
 def calculateMSE2D(X,Y,m,b):
-    return 0.
+    n = len(X)
+    i, _sum = 0, 0
+    while i < n: 
+        _sum += (Y[i]-m*X[i]-b)**2
+        i += 1        
+    return (_sum/n)
 
 # TODO 检查这里的结果, 如果你上面猜测的直线准确, 这里的输出会在1.5以内
 print(calculateMSE2D(X,Y,m1,b1))
@@ -761,6 +727,37 @@ print(calculateMSE2D(X,Y,m1,b1))
 
 # TODO 证明:
 
+# 证明 式子1:
+# $$
+# \begin{aligned}
+# \frac{\partial E}{\partial m} 
+# &= \frac{\partial }{\partial m}(\frac{1}{2}\sum_{i=1}^{n}{(y_i - mx_i - b)^2}) \\
+# &= \frac{1}{2}\frac{\partial}{\partial m}\sum_{i=1}^{n}{(y_i - mx_i - b)^2} \\
+# &=\frac{1}{2}\frac{\partial}{\partial m}\sum_{i=1}^{n}{(y_i^2+m^2x_i^2+b^2-2mx_iy_i+2bmx_i-2by_i^2)}\\
+# &=\frac{1}{2}\frac{\partial}{\partial m}\sum_{i=1}^{n}{(m^2x_i^2-2mx_iy_i+2bmx_i)} \\
+# &=\frac{1}{2}\sum_{i=1}^{n}{(\frac{\partial}{\partial m}m^2x_i^2-\frac{\partial}{\partial m}2mx_iy_i+\frac{\partial}{\partial m}2bmx_i)} \\
+# &=\frac{1}{2}\sum_{i=1}^{n}{(2mx_i^2-2x_iy_i+2bx_i)} \\
+# &=\sum_{i=1}^{n}{(mx_i^2-x_iy_i+bx_i)} \\
+# &=\sum_{i=1}^{n}{-x_i(y_i-mx_i-b)}\\
+# \end{aligned}
+# $$
+# 
+# 
+
+# 证明 式子2:
+# $$
+# \begin{aligned}
+# \frac{\partial E}{\partial b} 
+# &= \frac{\partial }{\partial b}(\frac{1}{2}\sum_{i=1}^{n}{(y_i - mx_i - b)^2}) \\
+# &= \frac{1}{2}\frac{\partial}{\partial b}\sum_{i=1}^{n}{(y_i - mx_i - b)^2} \\
+# &=\frac{1}{2}\frac{\partial}{\partial b}\sum_{i=1}^{n}{(y_i^2+m^2x_i^2+b^2-2mx_iy_i+2bmx_i-2by_i)}\\
+# &=\frac{1}{2}\frac{\partial}{\partial b}\sum_{i=1}^{n}{(b^2+2bmx_i-2by_2)} \\
+# &=\frac{1}{2}\sum_{i=1}^{n}{(\frac{\partial}{\partial b}b^2+\frac{\partial}{\partial b}2bmx_i-\frac{\partial}{\partial b}2by_i)} \\
+# &=\frac{1}{2}\sum_{i=1}^{n}{(2b+2mx_i-2y_i)} \\
+# &=\sum_{i=1}^{n}{-(y_i-mx_i-b)} \\
+# \end{aligned}
+# $$
+
 # ### 3.3.2 实例推演
 # 
 # 现在我们有了一个二元二次方程组
@@ -784,6 +781,39 @@ print(calculateMSE2D(X,Y,m1,b1))
 # - 并求解最优参数 $m, b$
 
 # TODO 写出目标函数，方程组和最优参数
+# $$
+# \begin{aligned}
+# \displaystyle
+# \sum_{i=1}^{n}{-x_i(y_i - mx_i - b)}
+# &= (-2+m+b)+(-4+4m+2b)+(-6+9m+3b) = -11+14m+6b = 0
+# \\
+# \displaystyle
+# \sum_{i=1}^{n}{-(y_i - mx_i - b)} 
+# &=(-1+m+b)+(-2+2m+b)+(-2+3m+3b) =-5+6m+3b = 0 \\
+# \end{aligned}
+# $$
+
+# $$
+# \begin{cases}
+# 14m+6b &= 11\\
+# 6m+3b &= -5
+# \end{cases}\\
+# $$
+# $$
+# \begin{cases}
+# 2m+0b &= 1\\
+# 6m+3b &= -5
+# \end{cases}\\
+# $$
+# $$
+# \begin{cases}
+# m &= \frac{1}{2}\\
+# b &= \frac{2}{3}\\
+# \end{cases}\\
+# $$
+# $$
+# y = \frac{1}{2}x+\frac{2}{3}
+# $$
 
 # ### 3.3.3 将方程组写成矩阵形式
 # 
@@ -826,7 +856,7 @@ print(calculateMSE2D(X,Y,m1,b1))
 # 
 # 在3.3 中，我们知道线性回归问题等价于求解 $X^TXh = X^TY$ (如果你选择不做3.3，就勇敢的相信吧，哈哈)
 
-# In[29]:
+# In[28]:
 
 
 # TODO 实现线性回归
@@ -838,7 +868,7 @@ def linearRegression2D(X,Y):
     return 0.,0.
 
 
-# In[30]:
+# In[29]:
 
 
 # 请不要修改下面的代码
@@ -851,7 +881,7 @@ print(m2,b2)
 # 你求得的回归结果是什么？
 # 请使用运行以下代码将它画出来。
 
-# In[31]:
+# In[30]:
 
 
 ## 请不要修改下面的代码
@@ -863,7 +893,7 @@ print(calculateMSE2D(X,Y,m2,b2))
 # 如果你的高斯约当消元法通过了单元测试, 那么它将能够解决多维的回归问题  
 # 你将会在更高维度考验你的线性回归实现
 
-# In[32]:
+# In[31]:
 
 
 # 生成三维的数据点
@@ -873,14 +903,14 @@ vs_scatter_3d(X_3d, Y_3d)
 
 # 你的线性回归是否能够对付三维的情况?
 
-# In[33]:
+# In[32]:
 
 
 def linearRegression(X,Y):
     return None
 
 
-# In[34]:
+# In[33]:
 
 
 coeff = linearRegression(X_3d, Y_3d)
