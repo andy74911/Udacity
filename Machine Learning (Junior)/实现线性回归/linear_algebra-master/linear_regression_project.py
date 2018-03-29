@@ -61,9 +61,14 @@ I = [[1,0,0,0],
 # TODO 返回矩阵的行数和列数
 def shape(M):
     r0 = M[0]
-    row = len(M)
-    col = len(r0)
-    return (row,col)
+    row = 0    
+    if type(r0) == list:
+        col = len(r0)
+        row = len(M)
+    else:
+        col = len(M)
+        row = 1
+    return row,col
 
 
 # In[4]:
@@ -105,11 +110,15 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_matxRound')
 
 
 def create_array(row, col):
-    M = [None] * row
-    r = 0
-    while r < row:
-        M[r] = [None] * col
-        r += 1
+    M = []
+    if row > 1:
+        M = [None]  * row
+        r = 0
+        while r < row:
+            M[r] = [None] * col
+            r += 1
+    else:
+        M = [[None] * col]
     return M
 
 
@@ -117,6 +126,14 @@ def create_array(row, col):
 
 
 # TODO 计算矩阵的转置
+def printMatrix(M):
+    row, col = shape(M)
+    for row in M:      
+        s = ''            
+        for ele in row:
+            s +=  '{:6.2f}'.format(ele) + ','
+        print(s)
+    print('')
 def transpose(M):
     row, col = shape(M)
     n_row, n_col =  col, row
@@ -211,14 +228,21 @@ def augmentMatrix(A, b):
     row , col = shape(A)
     n_row, n_col = row, col + 1    
     M = create_array(n_row, n_col)
-    r , c  = 0 , 0
-    for row in A:
-        c = 0
-        for ele in row:
-            M[r][c] = ele
-            c += 1
-        M[r][c] = b[r][0]
-        r += 1
+    r = 0   
+    if col != 1:
+          for row in A:
+            c = 0
+            for ele in row:
+                M[r][c] = ele
+                c += 1
+            M[r][c] = b[r][0]
+            r += 1
+    else:
+        i = 0 
+        while i < row:
+            M[i][0] = A[i][0]
+            M[i][1] = b[i][0]
+            i += 1
     return M
 
 
@@ -283,7 +307,6 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_scaleRow')
 
 
 # In[18]:
-
 
 
 # TODO r1 <--- r1 + r2*scale
@@ -448,34 +471,6 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 # In[22]:
 
 
-
-def first_not_zero_index(row, epsilon = 1.0e-16):
-    i = 0
-    for item in row:
-        if is_zero(item, epsilon) == False:
-            break
-        else:
-            i += 1
-    return i
-def order_row_on_diagonal_not_zero(M):
-    m_row, m_col = shape(M)
-    r = 0
-    print('order_row_on_diagonal_not_zero')
-    while r < m_row:
-        #idx = first_not_zero_index(M[r])
-        if M[r][r] == 0:
-            r_swap = r + 1
-            
-            while r_swap < m_row:
-                if M[r_swap][r] != 0:
-                    break
-                """if first_not_zero_index(M[r_swap]) <= r_swap :
-                    break"""
-                r_swap += 1
-            print('r_swap:{}, m_row:{}'.format(r_swap,m_row))
-            swapRows(M, r, r_swap)  
-            printMatrix(M)
-        r += 1
 def is_singualar(M, r = 0, epsilon = 1.0e-10):
     row, col = shape(M)
     #print('is_singualar fun')
@@ -492,29 +487,6 @@ def is_singualar(M, r = 0, epsilon = 1.0e-10):
             return True
         r += 1
     return False
-
-def printMatrix(M):    
-    for row in M:      
-        s = ''
-        for ele in row:
-            s +=  '{:6.2f}'.format(ele) + ','
-        print(s)
-    print("")
-def matrix_AB_to_A_B(M):
-    row, col = shape(M)
-    A = create_array(row, col-1)
-    B = create_array(row, 1)
-    r = 0
-    while r < row:
-        c = 0
-        while c < col:
-            if c < col -1 :
-                A[r][c] = M[r][c]
-            else:
-                B[r][0] = M[r][c]
-            c += 1
-        r += 1
-    return (A, B)
 
 
 # In[23]:
@@ -630,6 +602,17 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_gj_Solve')
 # - 考虑矩阵 A 的某一列是其他列的线性组合
 
 # TODO 证明：
+# $
+# A = \begin{bmatrix}
+#     I    & X \\
+#     Z    & Y \\
+# \end{bmatrix}
+# =I*Y - Z*X = I*Y - 0 = Y\\
+# \because Y 的第一列全0\\
+# \therefore \left \| Y  \right \| = 0
+# \Rightarrow \left \| A  \right \| = 0
+# $
+# 
 
 # # 3 线性回归
 
@@ -865,7 +848,16 @@ print(calculateMSE2D(X,Y,m1,b1))
 返回：线性回归的系数(如上面所说的 m, b)
 '''
 def linearRegression2D(X,Y):
-    return 0.,0.
+    X , Y = [X],[Y]
+    b = [[1]]*len(X[0])
+    X_m = augmentMatrix(transpose(X),b)
+    X_m_t = transpose(X_m)
+    Y_m = transpose(Y)
+    
+    A = matxMultiply(X_m_t, X_m)
+    b = matxMultiply(X_m_t, Y_m)
+    m,b = gj_Solve(A,b)
+    return m[0],b[0]
 
 
 # In[29]:
@@ -907,7 +899,17 @@ vs_scatter_3d(X_3d, Y_3d)
 
 
 def linearRegression(X,Y):
-    return None
+    Y = [Y]
+    b = [[1]]*len(X)
+    
+    X_m = augmentMatrix(X,b)
+    X_m_t = transpose(X_m)
+    Y_m = transpose(Y)
+    
+    A = matxMultiply(X_m_t, X_m)
+    b = matxMultiply(X_m_t, Y_m)
+    ans = gj_Solve(A,b)
+    return transpose(ans)[0]
 
 
 # In[33]:

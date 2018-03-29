@@ -41,7 +41,8 @@ class LinearRegressionTestCase(unittest.TestCase):
 
             mat = matrix.tolist()
             t = np.array(transpose(mat))
-
+            if (matrix.T == t).all() == False:
+                print(t)
             self.assertEqual(t.shape,(c,r),"Expected shape{}, but got shape{}".format((c,r),t.shape))
             self.assertTrue((matrix.T == t).all(),'Wrong answer')
 
@@ -144,10 +145,10 @@ class LinearRegressionTestCase(unittest.TestCase):
             x = gj_Solve(A.tolist(),b.tolist(),epsilon=1.0e-8)
 
             if np.linalg.matrix_rank(A) < r:
-                print('A = {}\n b = {}'.format(A,b))
+                #print('A = {}\n b = {}'.format(A,b))
                 self.assertEqual(x,None,"Matrix A is singular")
             else:
-                print('A = {}\n b = {}'.format(A,b))
+                #print('A = {}\n b = {}'.format(A,b))
                 self.assertNotEqual(x,None,"Matrix A is not singular")
                 self.assertEqual(np.array(x).shape,(r,1),"Expected shape({},1), but got shape{}".format(r,np.array(x).shape))
                 Ax = np.dot(A,np.array(x))
