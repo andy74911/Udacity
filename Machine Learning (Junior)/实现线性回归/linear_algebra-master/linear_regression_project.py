@@ -60,6 +60,8 @@ I = [[1,0,0,0],
 
 # TODO 返回矩阵的行数和列数
 def shape(M):
+    return len(M), len(M[0])
+    '''
     r0 = M[0]
     row = 0    
     if type(r0) == list:
@@ -69,6 +71,7 @@ def shape(M):
         col = len(M)
         row = 1
     return row,col
+    '''
 
 
 # In[4]:
@@ -110,14 +113,9 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_matxRound')
 
 
 def create_array(row, col):
-    M = []
-    if row > 1:
-        M = [None]  * row
-        r = 0
-        for r in range(row):
-            M[r] = [None] * col
-    else:
-        M = [[None] * col]
+    M = [None]  * row
+    for r in range(row):
+        M[r] = [None] * col
     return M
 
 
@@ -134,13 +132,14 @@ def printMatrix(M):
         print(s)
     print('')
 def transpose(M):
-    row, col = shape(M)
+    return [list(row) for row in zip(*M)]
+    '''row, col = shape(M)
     n_row, n_col =  col, row
     n_M = create_array(n_row,n_col)
     for r in range(n_row):
         for c in range(n_col):
             n_M[r][c] = M[c][r]
-    return n_M
+    return n_M'''
 
 
 # In[9]:
@@ -222,7 +221,8 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_matxMultipl
 
 # TODO 构造增广矩阵，假设A，b行数相同
 def augmentMatrix(A, b):
-    row , col = shape(A)
+    return [AA + bb for AA, bb in zip(A, b)]
+    '''row , col = shape(A)
     n_row, n_col = row, col + 1    
     M = create_array(n_row, n_col)
     r = 0   
@@ -238,7 +238,7 @@ def augmentMatrix(A, b):
         for i in range(row):
             M[i][0] = A[i][0]
             M[i][1] = b[i][0]            
-    return M
+    return M'''
 
 
 # In[13]:
@@ -259,9 +259,10 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_augmentMatr
 # TODO r1 <---> r2
 # 直接修改参数矩阵，无返回值
 def swapRows(M, r1, r2):
-    row = M[r1]
+    M[r1], M[r2] = M[r2], M[r1]
+    '''row = M[r1]
     M[r1] = M[r2]
-    M[r2] = row
+    M[r2] = row'''
 
 
 # In[15]:
@@ -477,22 +478,6 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 # In[22]:
 
 
-def is_singualar(M, r = 0, epsilon = 1.0e-10):
-    row, col = shape(M)
-    for r in range(min(row,col)):
-        c , all_ele_zero = 0, True
-        for c in range(col-1):  
-            if is_zero(M[r][c], epsilon) is False:
-                all_ele_zero = False
-                break
-        if all_ele_zero:
-            return True
-    return False
-
-
-# In[23]:
-
-
 # TODO 实现 Gaussain Jordan 方法求解 Ax = b
 
 """ Gaussian Jordan 方法求解 Ax = b.
@@ -525,11 +510,10 @@ def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
 
     result = [[row[-1]] for row in Ab]
     matxRound(result, decPts)
+    return result    
 
-    return result
 
-
-# In[24]:
+# In[23]:
 
 
 # 运行以下代码测试你的 gj_Solve 函数
@@ -564,7 +548,7 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_gj_Solve')
 
 # ## 3.1 随机生成样本点
 
-# In[25]:
+# In[24]:
 
 
 # 不要修改这里！
@@ -579,7 +563,7 @@ vs_scatter_2d(X, Y)
 # 
 # ### 3.2.1 猜测一条直线
 
-# In[26]:
+# In[25]:
 
 
 #TODO 请选择最适合的直线 y = mx + b
@@ -597,18 +581,13 @@ vs_scatter_2d(X, Y, m1, b1)
 # MSE = \frac{1}{n}\sum_{i=1}^{n}{(y_i - mx_i - b)^2}
 # $$
 
-# In[27]:
+# In[26]:
 
 
 # TODO 实现以下函数并输出所选直线的MSE
 def calculateMSE2D(X,Y,m,b):
-    '''
-    n = len(X)
-    i, _sum = 0, 0
-    for i in range(n):
-        _sum += (Y[i]-m*X[i]-b)**2
-    return (_sum/n)'''
-    return sum(map(lambda x,y: (y-m*x-b)**2, X,Y))/len(X)
+    #return sum(map(lambda x,y: (y-m*x-b)**2, X,Y))/len(X)
+    return sum([(y - m*x - b)**2 for x, y in zip(X, Y)])/len(X)
 
 # TODO 检查这里的结果, 如果你上面猜测的直线准确, 这里的输出会在1.5以内
 print(calculateMSE2D(X,Y,m1,b1))
@@ -786,7 +765,7 @@ print(calculateMSE2D(X,Y,m1,b1))
 # 
 # 在3.3 中，我们知道线性回归问题等价于求解 $X^TXh = X^TY$ (如果你选择不做3.3，就勇敢的相信吧，哈哈)
 
-# In[28]:
+# In[27]:
 
 
 # TODO 实现线性回归
@@ -807,7 +786,7 @@ def linearRegression2D(X,Y):
     return m[0],b[0]
 
 
-# In[29]:
+# In[28]:
 
 
 # 请不要修改下面的代码
@@ -820,7 +799,7 @@ print(m2,b2)
 # 你求得的回归结果是什么？
 # 请使用运行以下代码将它画出来。
 
-# In[30]:
+# In[29]:
 
 
 ## 请不要修改下面的代码
@@ -832,7 +811,7 @@ print(calculateMSE2D(X,Y,m2,b2))
 # 如果你的高斯约当消元法通过了单元测试, 那么它将能够解决多维的回归问题  
 # 你将会在更高维度考验你的线性回归实现
 
-# In[31]:
+# In[30]:
 
 
 # 生成三维的数据点
@@ -842,11 +821,21 @@ vs_scatter_3d(X_3d, Y_3d)
 
 # 你的线性回归是否能够对付三维的情况?
 
-# In[32]:
+# In[31]:
 
 
 def linearRegression(X,Y):
-    Y = [Y]
+    if not hasattr(X[0], '__len__'):
+        mat_X = [[x, 1] for x in X] 
+    else:
+        mat_X = augmentMatrix(X, [[1]]*len(X))
+    mat_Y = [[y] for y in Y]
+    XT = transpose(mat_X)
+    A = matxMultiply(XT, mat_X)  
+    b = matxMultiply(XT, mat_Y) 
+    result = gj_Solve(A, b, decPts=4, epsilon=1.0e-16) 
+    return list(zip(*result))[0]
+    '''Y = [Y]
     b = [[1]]*len(X)
     
     X_m = augmentMatrix(X,b)
@@ -856,10 +845,10 @@ def linearRegression(X,Y):
     A = matxMultiply(X_m_t, X_m)
     b = matxMultiply(X_m_t, Y_m)
     ans = gj_Solve(A,b)
-    return transpose(ans)[0]
+    return transpose(ans)[0]'''
 
 
-# In[33]:
+# In[32]:
 
 
 coeff = linearRegression(X_3d, Y_3d)
