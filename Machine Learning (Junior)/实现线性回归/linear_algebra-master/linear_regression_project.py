@@ -414,34 +414,54 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 # 在下面列出每一次循环体执行之后的增广矩阵(注意使用[分数语法](#分数的输入方法))
 # 
 # $ Ab = \begin{bmatrix}
-#     1 & 6 & -5 & -1 \\
+#     -1 & -6 & 5 & 1 \\
+#     -10 & 7 & 6 & 1 \\    
+#     7 & -2 & -1 & 1 \end{bmatrix}$
+#     
+# $ --> \begin{bmatrix}
+#      -10 & 7 & 6 & 1 \\
+#     -1 & -6 & 5 & 1 \\
+#     7 & -2 & -1 & 1 \end{bmatrix}$
+#     
+# $ --> \begin{bmatrix}
 #     1 & -\frac{7}{10} & -\frac{3}{5} & -\frac{1}{10} \\
-#     1 & -\frac{2}{7} & -\frac{1}{7} & \frac{1}{7} \end{bmatrix}$
+#     -1 & -6 & 5 & 1 \\
+#     7 & -2 & -1 & 1 \end{bmatrix}$
+#     
+# $ --> \begin{bmatrix}
+#     1 & 6 & 15 & -1 \\
+#     0 & -\frac{67}{10} & \frac{22}{5} & \frac{9}{10} \\
+#     7 & -2 & -1 & 1 \end{bmatrix}$    
+#     
+# $ --> \begin{bmatrix}
+#     1 & 6 & 15 & -1 \\
+#     0 & -\frac{67}{10} & \frac{22}{5} & \frac{9}{10} \\
+#     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$    
 # 
 # $ --> \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
-#     0 & \frac{67}{10} & -\frac{22}{5} & -\frac{9}{10} \\
-#     0 & \frac{44}{7} & -\frac{34}{7} & -\frac{8}{7} \end{bmatrix}$
+#     1 & 0 & -\frac{70}{67} & -\frac{13}{67} \\
+#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
+#     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$   
 #     
 # $ --> \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
+#     1 & 0 & -\frac{70}{67} & -\frac{13}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & 1 & -\frac{17}{22} & -\frac{2}{11} \end{bmatrix}$    
+#     0 & 0 & \frac{342}{5} & \frac{140}{67}\end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
+#     1 & 0 & -\frac{70}{67} & -\frac{13}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & 0 & \frac{171}{1474} & \frac{70}{1474} \end{bmatrix}$    
+#     0 & 0 & 1 & \frac{70}{171}\end{bmatrix}$
 # 
 # $ --> \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
+#     1 & 0 & 0 & \frac{41}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & 0 & 1 & \frac{70}{171} \end{bmatrix}$  
-#     
+#     0 & 0 & 1 & \frac{70}{171}\end{bmatrix}$
+# 
 # $ --> \begin{bmatrix}
-#     1 & 0 & 0 & \frac{41}{171} \\
-#     0 & 1 & 0 & \frac{23}{171} \\
-#     0 & 0 & 1 & \frac{70}{171} \end{bmatrix}$
+#     1 & 0 & 0 & \frac{41}{67} \\
+#     0 & 1 & 0 & \frac{23}{67} \\
+#     0 & 0 & 1 & \frac{70}{171}\end{bmatrix}$
 
 # In[21]:
 
@@ -494,7 +514,6 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
     if len(A) != len(b) : return None 
     Ab = augmentMatrix(A, b)
-
     for c in range(len(A)):
         col = transpose(Ab)[c][c:] 
         max_val = max(col, key=abs)
@@ -503,11 +522,9 @@ def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
         
         swapRows(Ab, c, max_idx) 
         scaleRow(Ab, c, 1.0/Ab[c][c])
-
         for i in range(len(Ab)):
             if i != c and Ab[i][c] != 0:
                 addScaledRow(Ab,i,c,-Ab[i][c])
-
     result = [[row[-1]] for row in Ab]
     matxRound(result, decPts)
     return result    

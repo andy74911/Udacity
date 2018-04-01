@@ -11909,7 +11909,7 @@ div#notebook {
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.007s
+Ran 1 test in 0.010s
 
 OK
 </pre>
@@ -11977,7 +11977,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.019s
+Ran 1 test in 0.016s
 
 OK
 </pre>
@@ -12068,7 +12068,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.013s
+Ran 1 test in 0.011s
 
 OK
 </pre>
@@ -12150,7 +12150,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.063s
+Ran 1 test in 0.059s
 
 OK
 </pre>
@@ -12246,7 +12246,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.007s
+Ran 1 test in 0.010s
 
 OK
 </pre>
@@ -12314,7 +12314,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.002s
+Ran 1 test in 0.004s
 
 OK
 </pre>
@@ -12378,7 +12378,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.005s
+Ran 1 test in 0.002s
 
 OK
 </pre>
@@ -12439,7 +12439,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.003s
+Ran 1 test in 0.002s
 
 OK
 </pre>
@@ -12591,29 +12591,45 @@ $\begin{bmatrix}
 <p>请按照算法的步骤3，逐步推演<strong><em>可逆矩阵</em></strong>的变换。</p>
 <p>在下面列出每一次循环体执行之后的增广矩阵(注意使用<a href="#分数的输入方法">分数语法</a>)</p>
 <p>$ Ab = \begin{bmatrix}
-    1 &amp; 6 &amp; -5 &amp; -1 \\
+    -1 &amp; -6 &amp; 5 &amp; 1 \\
+    -10 &amp; 7 &amp; 6 &amp; 1 \\    
+    7 &amp; -2 &amp; -1 &amp; 1 \end{bmatrix}$</p>
+<p>$ --&gt; \begin{bmatrix}
+     -10 &amp; 7 &amp; 6 &amp; 1 \\
+    -1 &amp; -6 &amp; 5 &amp; 1 \\
+    7 &amp; -2 &amp; -1 &amp; 1 \end{bmatrix}$</p>
+<p>$ --&gt; \begin{bmatrix}
     1 &amp; -\frac{7}{10} &amp; -\frac{3}{5} &amp; -\frac{1}{10} \\
-    1 &amp; -\frac{2}{7} &amp; -\frac{1}{7} &amp; \frac{1}{7} \end{bmatrix}$</p>
+    -1 &amp; -6 &amp; 5 &amp; 1 \\
+    7 &amp; -2 &amp; -1 &amp; 1 \end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
     1 &amp; 6 &amp; 15 &amp; -1 \\
-    0 &amp; \frac{67}{10} &amp; -\frac{22}{5} &amp; -\frac{9}{10} \\
-    0 &amp; \frac{44}{7} &amp; -\frac{34}{7} &amp; -\frac{8}{7} \end{bmatrix}$</p>
+    0 &amp; -\frac{67}{10} &amp; \frac{22}{5} &amp; \frac{9}{10} \\
+    7 &amp; -2 &amp; -1 &amp; 1 \end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
     1 &amp; 6 &amp; 15 &amp; -1 \\
+    0 &amp; -\frac{67}{10} &amp; \frac{22}{5} &amp; \frac{9}{10} \\
+    0 &amp; \frac{29}{10} &amp; \frac{16}{5} &amp; \frac{17}{10}\end{bmatrix}$</p>
+<p>$ --&gt; \begin{bmatrix}
+    1 &amp; 0 &amp; -\frac{70}{67} &amp; -\frac{13}{67} \\
     0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
-    0 &amp; 1 &amp; -\frac{17}{22} &amp; -\frac{2}{11} \end{bmatrix}$</p>
+    0 &amp; \frac{29}{10} &amp; \frac{16}{5} &amp; \frac{17}{10}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 6 &amp; 15 &amp; -1 \\
+    1 &amp; 0 &amp; -\frac{70}{67} &amp; -\frac{13}{67} \\
     0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
-    0 &amp; 0 &amp; \frac{171}{1474} &amp; \frac{70}{1474} \end{bmatrix}$</p>
+    0 &amp; 0 &amp; \frac{342}{5} &amp; \frac{140}{67}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 6 &amp; 15 &amp; -1 \\
+    1 &amp; 0 &amp; -\frac{70}{67} &amp; -\frac{13}{67} \\
     0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
-    0 &amp; 0 &amp; 1 &amp; \frac{70}{171} \end{bmatrix}$</p>
+    0 &amp; 0 &amp; 1 &amp; \frac{70}{171}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 0 &amp; 0 &amp; \frac{41}{171} \\
-    0 &amp; 1 &amp; 0 &amp; \frac{23}{171} \\
-    0 &amp; 0 &amp; 1 &amp; \frac{70}{171} \end{bmatrix}$</p>
+    1 &amp; 0 &amp; 0 &amp; \frac{41}{67} \\
+    0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
+    0 &amp; 0 &amp; 1 &amp; \frac{70}{171}\end{bmatrix}$</p>
+<p>$ --&gt; \begin{bmatrix}
+    1 &amp; 0 &amp; 0 &amp; \frac{41}{67} \\
+    0 &amp; 1 &amp; 0 &amp; \frac{23}{67} \\
+    0 &amp; 0 &amp; 1 &amp; \frac{70}{171}\end{bmatrix}$</p>
 
 </div>
 </div>
@@ -12706,7 +12722,6 @@ $\begin{bmatrix}
 <span class="k">def</span> <span class="nf">gj_Solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">decPts</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0e-16</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">:</span> <span class="k">return</span> <span class="kc">None</span> 
     <span class="n">Ab</span> <span class="o">=</span> <span class="n">augmentMatrix</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)):</span>
         <span class="n">col</span> <span class="o">=</span> <span class="n">transpose</span><span class="p">(</span><span class="n">Ab</span><span class="p">)[</span><span class="n">c</span><span class="p">][</span><span class="n">c</span><span class="p">:]</span> 
         <span class="n">max_val</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">abs</span><span class="p">)</span>
@@ -12715,11 +12730,9 @@ $\begin{bmatrix}
         
         <span class="n">swapRows</span><span class="p">(</span><span class="n">Ab</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">max_idx</span><span class="p">)</span> 
         <span class="n">scaleRow</span><span class="p">(</span><span class="n">Ab</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">Ab</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="n">c</span><span class="p">])</span>
-
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Ab</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">c</span> <span class="ow">and</span> <span class="n">Ab</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">addScaledRow</span><span class="p">(</span><span class="n">Ab</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="o">-</span><span class="n">Ab</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">c</span><span class="p">])</span>
-
     <span class="n">result</span> <span class="o">=</span> <span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">Ab</span><span class="p">]</span>
     <span class="n">matxRound</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">decPts</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>    
@@ -12755,7 +12768,7 @@ $\begin{bmatrix}
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 5.056s
+Ran 1 test in 4.547s
 
 OK
 </pre>
@@ -12843,10 +12856,10 @@ OK
 
 
 
-<div id="1a6fd33b-b5d7-4f8a-b21e-24ef6ca196ad"></div>
+<div id="e5a2329c-2df1-4020-af47-3a6d9e379a78"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#1a6fd33b-b5d7-4f8a-b21e-24ef6ca196ad');
+var element = $('#e5a2329c-2df1-4020-af47-3a6d9e379a78');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -13675,10 +13688,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="b2815605-e94a-476e-a3f6-25b39af03a00"></div>
+<div id="00b7d4b7-912c-4213-8cdc-0f07cedbebc5"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b2815605-e94a-476e-a3f6-25b39af03a00');
+var element = $('#00b7d4b7-912c-4213-8cdc-0f07cedbebc5');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -14857,10 +14870,10 @@ $$</p>
 
 
 
-<div id="44069019-8ceb-4007-8197-b584d92cafbb"></div>
+<div id="11825eef-5fd3-490e-8fd8-254126cdc65f"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#44069019-8ceb-4007-8197-b584d92cafbb');
+var element = $('#11825eef-5fd3-490e-8fd8-254126cdc65f');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -15699,10 +15712,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="92624244-bfd4-4209-a751-0ca2fa007f5e"></div>
+<div id="477fbe05-ddeb-4bce-8577-bc01411308ad"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#92624244-bfd4-4209-a751-0ca2fa007f5e');
+var element = $('#477fbe05-ddeb-4bce-8577-bc01411308ad');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -16562,10 +16575,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="2be8ce97-4ce3-436b-96af-3d75fc7f1832"></div>
+<div id="d3db34f1-9a2a-408d-8ce1-33ad005ad312"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#2be8ce97-4ce3-436b-96af-3d75fc7f1832');
+var element = $('#d3db34f1-9a2a-408d-8ce1-33ad005ad312');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
