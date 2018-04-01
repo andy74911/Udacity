@@ -114,9 +114,8 @@ def create_array(row, col):
     if row > 1:
         M = [None]  * row
         r = 0
-        while r < row:
+        for r in range(row):
             M[r] = [None] * col
-            r += 1
     else:
         M = [[None] * col]
     return M
@@ -138,13 +137,9 @@ def transpose(M):
     row, col = shape(M)
     n_row, n_col =  col, row
     n_M = create_array(n_row,n_col)
-    r , c = 0 , 0
-    while r < n_row:
-        c = 0
-        while c < n_col:
+    for r in range(n_row):
+        for c in range(n_col):
             n_M[r][c] = M[c][r]
-            c += 1
-        r += 1
     return n_M
 
 
@@ -162,28 +157,30 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_transpose')
 
 # TODO 计算矩阵乘法 AB，如果无法相乘则raise ValueError
 def matxMultiply(A, B):
-    A_row, A_col = shape(A)
+    r_a, c_a = shape(A)
+    r_b, c_b = shape(B)
+
+    if c_a != r_b:
+        raise ValueError 
+
+    B_t = transpose(B)
+
+    return [[sum(e1*e2 for e1, e2 in zip(row, col)) 
+             for col in B_t] for row in A]
+    '''A_row, A_col = shape(A)
     B_row, B_col = shape(B)
     if A_col != B_row and A_row != B_col:
         raise ValueError('Can mutltiply A by B (size incorrect)')
     else:
         n_row, n_col = A_row, B_col
         M = create_array(n_row, n_col)
-        r, c = 0, 0
-        while c < n_col:
-            r = 0
-            while r < n_row:
-                r = 0         
-                while r < n_row:
-                    sum  = 0
-                    i = 0
-                    while i < B_row:
-                        sum += A[r][i]*B[i][c]
-                        i += 1
-                    M[r][c] = sum
-                    r += 1                
-            c += 1
-        return M
+        for c in range(n_col):
+            for r in range(n_row):
+                sum  = 0
+                for i in range(B_row):
+                    sum += A[r][i]*B[i][c]
+                M[r][c] = sum
+        return M'''
 
 
 # In[11]:
@@ -237,12 +234,10 @@ def augmentMatrix(A, b):
                 c += 1
             M[r][c] = b[r][0]
             r += 1
-    else:
-        i = 0 
-        while i < row:
+    else:        
+        for i in range(row):
             M[i][0] = A[i][0]
-            M[i][1] = b[i][0]
-            i += 1
+            M[i][1] = b[i][0]            
     return M
 
 
@@ -290,12 +285,10 @@ def scaleRow(M, r, scale):
     else:
         row, col = shape(M)
         n_row = [None] * col
-        i = 0 
-        while i < col:
+        for i in range(col):
             n_row[i] = M[r][i] * scale
             if is_zero(n_row[i]):
                 n_row[i] = 0
-            i += 1
         M[r] = n_row
 
 
@@ -317,12 +310,10 @@ def addScaledRow(M, r1, r2, scale):
     else:
         row, col = shape(M)
         n_row = [None] * col
-        i = 0
-        while i < col:
+        for i in range(col):
             n_row[i] = M[r1][i] + M[r2][i] * scale
             if is_zero(n_row[i]):
                 n_row[i] = 0
-            i += 1
         M[r1] = n_row
 
 
@@ -422,14 +413,29 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 # 在下面列出每一次循环体执行之后的增广矩阵(注意使用[分数语法](#分数的输入方法))
 # 
 # $ Ab = \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
-#     0 & 67 & -44 & -9 \\
-#     0 & -22 & 17 & 4 \end{bmatrix}$
+#     1 & 6 & -5 & -1 \\
+#     1 & -\frac{7}{10} & -\frac{3}{5} & -\frac{1}{10} \\
+#     1 & -\frac{2}{7} & -\frac{1}{7} & \frac{1}{7} \end{bmatrix}$
 # 
 # $ --> \begin{bmatrix}
 #     1 & 6 & 15 & -1 \\
-#     0 & 1 & \frac{-44}{67} & \frac{-9}{67} \\
-#     0 & 0 & \frac{171}{67} & \frac{70}{67} \end{bmatrix}$
+#     0 & \frac{67}{10} & -\frac{22}{5} & -\frac{9}{10} \\
+#     0 & \frac{44}{7} & -\frac{34}{7} & -\frac{8}{7} \end{bmatrix}$
+#     
+# $ --> \begin{bmatrix}
+#     1 & 6 & 15 & -1 \\
+#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
+#     0 & 1 & -\frac{17}{22} & -\frac{2}{11} \end{bmatrix}$    
+#     
+# $ --> \begin{bmatrix}
+#     1 & 6 & 15 & -1 \\
+#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
+#     0 & 0 & \frac{171}{1474} & \frac{70}{1474} \end{bmatrix}$    
+# 
+# $ --> \begin{bmatrix}
+#     1 & 6 & 15 & -1 \\
+#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
+#     0 & 0 & 1 & \frac{70}{171} \end{bmatrix}$  
 #     
 # $ --> \begin{bmatrix}
 #     1 & 0 & 0 & \frac{41}{171} \\
@@ -473,19 +479,14 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 
 def is_singualar(M, r = 0, epsilon = 1.0e-10):
     row, col = shape(M)
-    #print('is_singualar fun')
-    #printMatrix(M)
-    while r < min(row, col):
+    for r in range(min(row,col)):
         c , all_ele_zero = 0, True
-        while c < col - 1:                 
-            #print('M[r][c] = {}'.format(M[r][c]))
+        for c in range(col-1):  
             if is_zero(M[r][c], epsilon) is False:
                 all_ele_zero = False
                 break
-            c += 1
         if all_ele_zero:
             return True
-        r += 1
     return False
 
 
@@ -506,70 +507,26 @@ def is_singualar(M, r = 0, epsilon = 1.0e-10):
     返回None，如果 A 为奇异矩阵
 """
 def gj_Solve(A, b, decPts=4, epsilon=1.0e-16):
-    a_row, a_col = shape(A)
-    b_row, b_col = shape(b)
-    if a_row != b_row and a_col != b_row:
-        raise ValueError('Row number of A and B are not euqal')
-        return None
-    M = augmentMatrix(A,b) 
-    c = 0
-    while c < min(a_col, a_row):  
-        #row operation 1    
-        r =  c 
-        max_row, max_value = -1 , 0
-        while r < a_row:
-            num = abs(M[r][c])
-            if num > max_value:
-                max_value = num
-                max_row = r
-            r += 1
-        if max_row != c and max_row!= -1:
-            swapRows(M, c, max_row) 
-            
-        #row operation 2
-        r = 0
-        while r < a_row:
-            if not is_zero(M[r][r]):
-                scaleRow(M, r, 1/M[r][r]) 
-                if is_singualar(M, r = r):
-                    return None
-            r += 1
-        
-        #row operation 3    
-        r = c
-        while r < a_row - 1:
-            if not is_zero(M[c][c]):
-                #if not is_zero( M[r+1][c]):
-                s = -1 * M[r+1][c]/M[c][c]
-                addScaledRow(M, r + 1, c , s)
-            r += 1
-        c += 1
-   
-    if not is_zero( M[a_row - 1][a_col-1]) :
-        scaleRow(M, a_row -1, 1/ M[a_row - 1][a_col-1]) 
-    
-    r = a_row - 1
-    while r > 0:
-        r_cnt = r
-        while r_cnt > 0: 
-            s = - M[r_cnt -1][r]
-            if not is_zero(s):
-                addScaledRow(M, r_cnt -1, r, s)
-                if is_singualar(M, r = r):
-                    return None
-            r_cnt -= 1        
-        r -= 1
-        
-    if is_singualar(M):
-        return None
-    ans = [None] * b_row
-    i = 0
-    while i < b_row:
-        ans[i] = [M[i][a_col]]
-        i += 1
-    return ans
+    if len(A) != len(b) : return None 
+    Ab = augmentMatrix(A, b)
 
-#is_singualar(D)
+    for c in range(len(A)):
+        col = transpose(Ab)[c][c:] 
+        max_val = max(col, key=abs)
+        if abs(max_val) < epsilon: return None 
+        max_idx = col.index(max_val) + c 
+        
+        swapRows(Ab, c, max_idx) 
+        scaleRow(Ab, c, 1.0/Ab[c][c])
+
+        for i in range(len(Ab)):
+            if i != c and Ab[i][c] != 0:
+                addScaledRow(Ab,i,c,-Ab[i][c])
+
+    result = [[row[-1]] for row in Ab]
+    matxRound(result, decPts)
+
+    return result
 
 
 # In[24]:
@@ -602,17 +559,6 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_gj_Solve')
 # - 考虑矩阵 A 的某一列是其他列的线性组合
 
 # TODO 证明：
-# $
-# A = \begin{bmatrix}
-#     I    & X \\
-#     Z    & Y \\
-# \end{bmatrix}
-# =I*Y - Z*X = I*Y - 0 = Y\\
-# \because Y 的第一列全0\\
-# \therefore \left \| Y  \right \| = 0
-# \Rightarrow \left \| A  \right \| = 0
-# $
-# 
 
 # # 3 线性回归
 
@@ -656,12 +602,13 @@ vs_scatter_2d(X, Y, m1, b1)
 
 # TODO 实现以下函数并输出所选直线的MSE
 def calculateMSE2D(X,Y,m,b):
+    '''
     n = len(X)
     i, _sum = 0, 0
-    while i < n: 
+    for i in range(n):
         _sum += (Y[i]-m*X[i]-b)**2
-        i += 1        
-    return (_sum/n)
+    return (_sum/n)'''
+    return sum(map(lambda x,y: (y-m*x-b)**2, X,Y))/len(X)
 
 # TODO 检查这里的结果, 如果你上面猜测的直线准确, 这里的输出会在1.5以内
 print(calculateMSE2D(X,Y,m1,b1))
