@@ -119,7 +119,7 @@ def create_array(row, col):
     return M
 
 
-# In[8]:
+# In[38]:
 
 
 # TODO 计算矩阵的转置
@@ -140,6 +140,9 @@ def transpose(M):
         for c in range(n_col):
             n_M[r][c] = M[c][r]
     return n_M'''
+print(A)
+print(list(zip(*A)))
+print([list(col) for col in zip(*A)])
 
 
 # In[9]:
@@ -434,22 +437,22 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 #     7 & -2 & -1 & 1 \end{bmatrix}$    
 #     
 # $ --> \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
+#     1 & -\frac{7}{10} & -\frac{3}{5} & -\frac{1}{10} \\
 #     0 & -\frac{67}{10} & \frac{22}{5} & \frac{9}{10} \\
 #     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$    
 # 
 # $ --> \begin{bmatrix}
-#     1 & 0 & -\frac{70}{67} & -\frac{13}{67} \\
+#     1 & 0 & -\frac{71}{67} & -\frac{13}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$   
+#     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
-#     1 & 0 & -\frac{70}{67} & -\frac{13}{67} \\
+#     1 & 0 & -\frac{71}{67} & -\frac{13}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & 0 & \frac{342}{5} & \frac{140}{67}\end{bmatrix}$
+#     0 & 0 & \frac{342}{67} & \frac{140}{67}\end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
-#     1 & 0 & -\frac{70}{67} & -\frac{13}{67} \\
+#     1 & 0 & -\frac{71}{67} & -\frac{13}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
 #     0 & 0 & 1 & \frac{70}{171}\end{bmatrix}$
 # 
@@ -559,7 +562,64 @@ get_ipython().magic('run -i -e test.py LinearRegressionTestCase.test_gj_Solve')
 # - 考虑矩阵 Y 和 矩阵 A 的行列式
 # - 考虑矩阵 A 的某一列是其他列的线性组合
 
-# TODO 证明：
+# TODO 证明：<br>
+# Let X as a m *n matrix
+# $
+# \left|A\right| \\
+# =\left| \begin{array}{}
+# I & X \\
+# Z & Y 
+# \end{array}\right|\\
+# =\left| \begin{array}{}
+# 1& &0&x_{11}& \dots &  x_{1n} \\
+# & \ddots&&\vdots &\ddots & \vdots\\
+# 0&\dots & 1&x_{m1}& \dots &  x_{mn}\\
+# 0&\dots & 0\\
+# \vdots& \ddots & \vdots&& Y& \\
+# 0&\dots & 0\\
+# \end{array}\right| \\
+# =1\times \left| \begin{array}{}
+# 1& &0&x_{21}& \dots &  x_{2n} \\
+# & \ddots&&\vdots &\ddots & \vdots\\
+# 0&\dots & 1&x_{m1}& \dots &  x_{mn}\\
+# 0&\dots & 0\\
+# \vdots& \ddots & \vdots&& Y& \\
+# 0&\dots & 0\\
+# \end{array}\right| -
+# 0\times \left| \begin{array}{}
+# 1& &0&x_{11}& \dots &  x_{1n} \\
+# & \ddots&&\vdots &\ddots & \vdots\\
+# 0&\dots & 1&x_{m1}& \dots &  x_{mn}\\
+# 0&\dots & 0\\
+# \vdots& \ddots & \vdots&& Y& \\
+# 0&\dots & 0\\
+# \end{array}\right| + 0 \times \dots \\
+# =1\times \left| \begin{array}{}
+# 1& &0&x_{31}& \dots &  x_{3n} \\
+# & \ddots&&\vdots &\ddots & \vdots\\
+# 0&\dots & 1&x_{m1}& \dots &  x_{mn}\\
+# 0&\dots & 0\\
+# \vdots& \ddots & \vdots&& Y& \\
+# 0&\dots & 0\\
+# \end{array}\right| -
+# 0\times \left| \begin{array}{}
+# 1& &0&x_{21}& \dots &  x_{2n} \\
+# & \ddots&&\vdots &\ddots & \vdots\\
+# 0&\dots & 1&x_{m1}& \dots &  x_{mn}\\
+# 0&\dots & 0\\
+# \vdots& \ddots & \vdots&& Y& \\
+# 0&\dots & 0\\
+# \end{array}\right| + 0 \times \dots \\
+# \vdots \\
+# = 1 \times \left| \begin{array}{}
+#  1&x_{m1}& \dots &  x_{mn}\\
+#  0&& & \\
+#  \vdots&& Y& \\
+#  0&& & \\
+# \end{array}\right|\\
+# = 1 \times \left| Y \right|\\
+# = 0
+# $
 
 # # 3 线性回归
 
@@ -775,6 +835,68 @@ print(calculateMSE2D(X,Y,m1,b1))
 # $$
 
 # TODO 证明:
+# $
+# \begin{bmatrix}
+#     \frac{\partial E}{\partial m} \\
+#     \frac{\partial E}{\partial b} 
+# \end{bmatrix} \\
+# = X^TXh - X^TY\\
+# = \begin{bmatrix}
+#     x_1 & x_2 & \dots & x_n \\
+#    1 & 1 &\dots & 1 \\
+# \end{bmatrix}
+# \begin{bmatrix}
+#     x_1 & 1 \\
+#     x_2 & 1\\
+#     \vdots & \vdots \\
+#     x_n & 1 \\
+# \end{bmatrix}
+# \begin{bmatrix}
+#     m \\
+#     b \\
+# \end{bmatrix}
+# -\begin{bmatrix}
+#     x_1 & x_2 & \dots & x_n \\
+#    1 & 1 &\dots & x_n \\
+# \end{bmatrix}
+# \begin{bmatrix}
+#     y_1 \\
+#     y_2 \\
+#     \vdots \\
+#     y_n
+# \end{bmatrix}\\
+# =\begin{bmatrix}
+#     x_1^2 + x_2^2 + \dots + x_n^2 &  x_1 + x_2 +\dots+ x_n \\
+#    1x_1 + x_2 +\dots+ x_n & 1+1+\dots+1 
+# \end{bmatrix}
+# \begin{bmatrix}
+#     m \\
+#     b \\
+# \end{bmatrix}-
+# \begin{bmatrix}
+#     x_1y_1+x_2y_2+\dots+x_ny_n \\
+#     y_1+y_2+\dots+y_n \\
+# \end{bmatrix}\\
+# =\begin{bmatrix}
+# \begin{aligned}
+# m\sum_{i=0}^n x_i^2 +b\sum_{i=0}^nx_i \\
+# b\sum_{i=0}^nx_i + \sum_{i=0}^n1 \\
+# \end{aligned}
+# \end{bmatrix}
+# -
+# \begin{bmatrix}
+# \begin{aligned}
+# \sum_{i=0}^n x_iy_i\\
+# b\sum_{i=0}^ny_i  \\
+# \end{aligned}
+# \end{bmatrix}\\
+# =\begin{bmatrix}
+# \begin{aligned}
+# \sum_{i=0}^n -x_i(y_i-mx_i-b)\\
+# \sum_{i=0}^n-(y_i-mx_i-b)  \\
+# \end{aligned}
+# \end{bmatrix}\\
+# $
 
 # 至此我们知道，通过求解方程 $X^TXh = X^TY$ 来找到最优参数。这个方程十分重要，他有一个名字叫做 **Normal Equation**，也有直观的几何意义。你可以在 [子空间投影](http://open.163.com/movie/2010/11/J/U/M6V0BQC4M_M6V2AJLJU.html) 和 [投影矩阵与最小二乘](http://open.163.com/movie/2010/11/P/U/M6V0BQC4M_M6V2AOJPU.html) 看到更多关于这个方程的内容。
 

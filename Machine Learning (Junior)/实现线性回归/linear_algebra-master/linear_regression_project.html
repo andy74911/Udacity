@@ -11909,7 +11909,7 @@ div#notebook {
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.010s
+Ran 1 test in 0.008s
 
 OK
 </pre>
@@ -11977,7 +11977,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.016s
+Ran 1 test in 0.009s
 
 OK
 </pre>
@@ -12036,9 +12036,32 @@ OK
 <span class="sd">        for c in range(n_col):</span>
 <span class="sd">            n_M[r][c] = M[c][r]</span>
 <span class="sd">    return n_M&#39;&#39;&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">A</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">A</span><span class="p">)])</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[1, 2, 3], [2, 3, 3], [1, 2, 5]]
+[(1, 2, 1), (2, 3, 2), (3, 3, 5)]
+[[1, 2, 1], [2, 3, 2], [3, 3, 5]]
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -12068,7 +12091,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.011s
+Ran 1 test in 0.013s
 
 OK
 </pre>
@@ -12150,7 +12173,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.059s
+Ran 1 test in 0.050s
 
 OK
 </pre>
@@ -12314,7 +12337,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.004s
+Ran 1 test in 0.003s
 
 OK
 </pre>
@@ -12378,7 +12401,7 @@ OK
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 0.002s
+Ran 1 test in 0.003s
 
 OK
 </pre>
@@ -12607,19 +12630,19 @@ $\begin{bmatrix}
     0 &amp; -\frac{67}{10} &amp; \frac{22}{5} &amp; \frac{9}{10} \\
     7 &amp; -2 &amp; -1 &amp; 1 \end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 6 &amp; 15 &amp; -1 \\
+    1 &amp; -\frac{7}{10} &amp; -\frac{3}{5} &amp; -\frac{1}{10} \\
     0 &amp; -\frac{67}{10} &amp; \frac{22}{5} &amp; \frac{9}{10} \\
     0 &amp; \frac{29}{10} &amp; \frac{16}{5} &amp; \frac{17}{10}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 0 &amp; -\frac{70}{67} &amp; -\frac{13}{67} \\
+    1 &amp; 0 &amp; -\frac{71}{67} &amp; -\frac{13}{67} \\
     0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
     0 &amp; \frac{29}{10} &amp; \frac{16}{5} &amp; \frac{17}{10}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 0 &amp; -\frac{70}{67} &amp; -\frac{13}{67} \\
+    1 &amp; 0 &amp; -\frac{71}{67} &amp; -\frac{13}{67} \\
     0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
-    0 &amp; 0 &amp; \frac{342}{5} &amp; \frac{140}{67}\end{bmatrix}$</p>
+    0 &amp; 0 &amp; \frac{342}{67} &amp; \frac{140}{67}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
-    1 &amp; 0 &amp; -\frac{70}{67} &amp; -\frac{13}{67} \\
+    1 &amp; 0 &amp; -\frac{71}{67} &amp; -\frac{13}{67} \\
     0 &amp; 1 &amp; -\frac{44}{67} &amp; -\frac{9}{67} \\
     0 &amp; 0 &amp; 1 &amp; \frac{70}{171}\end{bmatrix}$</p>
 <p>$ --&gt; \begin{bmatrix}
@@ -12768,7 +12791,7 @@ $\begin{bmatrix}
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>.
 ----------------------------------------------------------------------
-Ran 1 test in 4.547s
+Ran 1 test in 4.708s
 
 OK
 </pre>
@@ -12806,7 +12829,64 @@ OK
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>TODO 证明：</p>
+<p>TODO 证明：<br>
+Let X as a m *n matrix
+$
+\left|A\right| \\
+=\left| \begin{array}{}
+I &amp; X \\
+Z &amp; Y 
+\end{array}\right|\\
+=\left| \begin{array}{}
+1&amp; &amp;0&amp;x_{11}&amp; \dots &amp;  x_{1n} \\
+&amp; \ddots&amp;&amp;\vdots &amp;\ddots &amp; \vdots\\
+0&amp;\dots &amp; 1&amp;x_{m1}&amp; \dots &amp;  x_{mn}\\
+0&amp;\dots &amp; 0\\
+\vdots&amp; \ddots &amp; \vdots&amp;&amp; Y&amp; \\
+0&amp;\dots &amp; 0\\
+\end{array}\right| \\
+=1\times \left| \begin{array}{}
+1&amp; &amp;0&amp;x_{21}&amp; \dots &amp;  x_{2n} \\
+&amp; \ddots&amp;&amp;\vdots &amp;\ddots &amp; \vdots\\
+0&amp;\dots &amp; 1&amp;x_{m1}&amp; \dots &amp;  x_{mn}\\
+0&amp;\dots &amp; 0\\
+\vdots&amp; \ddots &amp; \vdots&amp;&amp; Y&amp; \\
+0&amp;\dots &amp; 0\\
+\end{array}\right| -
+0\times \left| \begin{array}{}
+1&amp; &amp;0&amp;x_{11}&amp; \dots &amp;  x_{1n} \\
+&amp; \ddots&amp;&amp;\vdots &amp;\ddots &amp; \vdots\\
+0&amp;\dots &amp; 1&amp;x_{m1}&amp; \dots &amp;  x_{mn}\\
+0&amp;\dots &amp; 0\\
+\vdots&amp; \ddots &amp; \vdots&amp;&amp; Y&amp; \\
+0&amp;\dots &amp; 0\\
+\end{array}\right| + 0 \times \dots \\
+=1\times \left| \begin{array}{}
+1&amp; &amp;0&amp;x_{31}&amp; \dots &amp;  x_{3n} \\
+&amp; \ddots&amp;&amp;\vdots &amp;\ddots &amp; \vdots\\
+0&amp;\dots &amp; 1&amp;x_{m1}&amp; \dots &amp;  x_{mn}\\
+0&amp;\dots &amp; 0\\
+\vdots&amp; \ddots &amp; \vdots&amp;&amp; Y&amp; \\
+0&amp;\dots &amp; 0\\
+\end{array}\right| -
+0\times \left| \begin{array}{}
+1&amp; &amp;0&amp;x_{21}&amp; \dots &amp;  x_{2n} \\
+&amp; \ddots&amp;&amp;\vdots &amp;\ddots &amp; \vdots\\
+0&amp;\dots &amp; 1&amp;x_{m1}&amp; \dots &amp;  x_{mn}\\
+0&amp;\dots &amp; 0\\
+\vdots&amp; \ddots &amp; \vdots&amp;&amp; Y&amp; \\
+0&amp;\dots &amp; 0\\
+\end{array}\right| + 0 \times \dots \\
+\vdots \\
+= 1 \times \left| \begin{array}{}
+ 1&amp;x_{m1}&amp; \dots &amp;  x_{mn}\\
+ 0&amp;&amp; &amp; \\
+ \vdots&amp;&amp; Y&amp; \\
+ 0&amp;&amp; &amp; \\
+\end{array}\right|\\
+= 1 \times \left| Y \right|\\
+= 0
+$</p>
 
 </div>
 </div>
@@ -12856,10 +12936,10 @@ OK
 
 
 
-<div id="e5a2329c-2df1-4020-af47-3a6d9e379a78"></div>
+<div id="4505addf-6dea-4cd8-b13c-bc429a55f673"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#e5a2329c-2df1-4020-af47-3a6d9e379a78');
+var element = $('#4505addf-6dea-4cd8-b13c-bc429a55f673');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -13688,10 +13768,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="00b7d4b7-912c-4213-8cdc-0f07cedbebc5"></div>
+<div id="3ab0e6b8-8dba-4d4a-9d4f-d04cb53d5e62"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#00b7d4b7-912c-4213-8cdc-0f07cedbebc5');
+var element = $('#3ab0e6b8-8dba-4d4a-9d4f-d04cb53d5e62');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -14748,7 +14828,67 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>TODO 证明:</p>
+<p>TODO 证明:
+$
+\begin{bmatrix}
+    \frac{\partial E}{\partial m} \\
+    \frac{\partial E}{\partial b} 
+\end{bmatrix} \
+= X^TXh - X^TY\
+= \begin{bmatrix}
+    x_1 &amp; x_2 &amp; \dots &amp; x_n \\
+   1 &amp; 1 &amp;\dots &amp; 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+    x_1 &amp; 1 \\
+    x_2 &amp; 1\\
+    \vdots &amp; \vdots \\
+    x_n &amp; 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+    m \\
+    b \\
+\end{bmatrix}
+-\begin{bmatrix}
+    x_1 &amp; x_2 &amp; \dots &amp; x_n \\
+   1 &amp; 1 &amp;\dots &amp; x_n \\
+\end{bmatrix}
+\begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    \vdots \\
+    y_n
+\end{bmatrix}\
+=\begin{bmatrix}
+    x_1^2 + x_2^2 + \dots + x_n^2 &amp;  x_1 + x_2 +\dots+ x_n \\
+   1x_1 + x_2 +\dots+ x_n &amp; 1+1+\dots+1 
+\end{bmatrix}
+\begin{bmatrix}
+    m \\
+    b \\
+\end{bmatrix}-
+\begin{bmatrix}
+    x_1y_1+x_2y_2+\dots+x_ny_n \\
+    y_1+y_2+\dots+y_n \\
+\end{bmatrix}\
+=\begin{bmatrix}
+\begin{aligned}
+m\sum_{i=0}^n x_i^2 +b\sum_{i=0}^nx_i \\
+b\sum_{i=0}^nx_i + \sum_{i=0}^n1 \\
+\end{aligned}</p>
+<h2 id="\end{bmatrix}">\end{bmatrix}<a class="anchor-link" href="#\end{bmatrix}">&#182;</a></h2><p>\begin{bmatrix}
+\begin{aligned}
+\sum_{i=0}^n x_iy_i\\
+b\sum_{i=0}^ny_i  \\
+\end{aligned}
+\end{bmatrix}\
+=\begin{bmatrix}
+\begin{aligned}
+\sum_{i=0}^n -x_i(y_i-mx_i-b)\\
+\sum_{i=0}^n-(y_i-mx_i-b)  \\
+\end{aligned}
+\end{bmatrix}\
+$</p>
 
 </div>
 </div>
@@ -14870,10 +15010,10 @@ $$</p>
 
 
 
-<div id="11825eef-5fd3-490e-8fd8-254126cdc65f"></div>
+<div id="e590ea3a-6ce2-442a-b660-f41f2fdf49ef"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#11825eef-5fd3-490e-8fd8-254126cdc65f');
+var element = $('#e590ea3a-6ce2-442a-b660-f41f2fdf49ef');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -15712,10 +15852,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="477fbe05-ddeb-4bce-8577-bc01411308ad"></div>
+<div id="280113ad-13e4-4b61-8b47-48407c88f382"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#477fbe05-ddeb-4bce-8577-bc01411308ad');
+var element = $('#280113ad-13e4-4b61-8b47-48407c88f382');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -16575,10 +16715,10 @@ if (IPython.notebook.kernel != null) {
 
 
 
-<div id="d3db34f1-9a2a-408d-8ce1-33ad005ad312"></div>
+<div id="53fecb5e-b3aa-4752-91c3-e39cf06505ee"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#d3db34f1-9a2a-408d-8ce1-33ad005ad312');
+var element = $('#53fecb5e-b3aa-4752-91c3-e39cf06505ee');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
