@@ -119,7 +119,7 @@ def create_array(row, col):
     return M
 
 
-# In[38]:
+# In[8]:
 
 
 # TODO 计算矩阵的转置
@@ -422,44 +422,14 @@ printInMatrixFormat(Ab,padding=3,truncating=0)
 #     7 & -2 & -1 & 1 \end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
-#      -10 & 7 & 6 & 1 \\
-#     -1 & -6 & 5 & 1 \\
-#     7 & -2 & -1 & 1 \end{bmatrix}$
-#     
-# $ --> \begin{bmatrix}
-#     1 & -\frac{7}{10} & -\frac{3}{5} & -\frac{1}{10} \\
-#     -1 & -6 & 5 & 1 \\
-#     7 & -2 & -1 & 1 \end{bmatrix}$
-#     
-# $ --> \begin{bmatrix}
-#     1 & 6 & 15 & -1 \\
-#     0 & -\frac{67}{10} & \frac{22}{5} & \frac{9}{10} \\
-#     7 & -2 & -1 & 1 \end{bmatrix}$    
-#     
-# $ --> \begin{bmatrix}
 #     1 & -\frac{7}{10} & -\frac{3}{5} & -\frac{1}{10} \\
 #     0 & -\frac{67}{10} & \frac{22}{5} & \frac{9}{10} \\
 #     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$    
-# 
-# $ --> \begin{bmatrix}
-#     1 & 0 & -\frac{71}{67} & -\frac{13}{67} \\
-#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & \frac{29}{10} & \frac{16}{5} & \frac{17}{10}\end{bmatrix}$
 #     
 # $ --> \begin{bmatrix}
 #     1 & 0 & -\frac{71}{67} & -\frac{13}{67} \\
 #     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
 #     0 & 0 & \frac{342}{67} & \frac{140}{67}\end{bmatrix}$
-#     
-# $ --> \begin{bmatrix}
-#     1 & 0 & -\frac{71}{67} & -\frac{13}{67} \\
-#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & 0 & 1 & \frac{70}{171}\end{bmatrix}$
-# 
-# $ --> \begin{bmatrix}
-#     1 & 0 & 0 & \frac{41}{67} \\
-#     0 & 1 & -\frac{44}{67} & -\frac{9}{67} \\
-#     0 & 0 & 1 & \frac{70}{171}\end{bmatrix}$
 # 
 # $ --> \begin{bmatrix}
 #     1 & 0 & 0 & \frac{41}{67} \\
