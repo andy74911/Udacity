@@ -49,7 +49,7 @@ class Robot(object):
         else:
             # TODO 2. Update parameters when learning
             pass
-            if self.epsilon > 0.3:
+            if self.epsilon > 0.05:
                 self.epsilon *= 0.9999
             if self.alpha < 0.5:
                 self.alpha *= 1.01
@@ -120,8 +120,8 @@ class Robot(object):
         """
         if self.learning:
             max_next_action=max(self.Qtable[next_state], key=self.Qtable[next_state].get)
-            self.Qtable[self.state][action]=(1-self.alpha)*self.Qtable[self.state][action]
-            +self.alpha*(r+self.gamma*self.Qtable[next_state][max_next_action])
+            self.Qtable[self.state][action]=(1-self.alpha)*self.Qtable[self.state][action]\
+            +self.alpha*(r+self.gamma*max(self.Qtable[next_state].values()))
             # TODO 8. When learning, update the q table according
             # to the given rules
 
